@@ -1,15 +1,19 @@
-import Link from 'next/link'
-import Layout from '../components/Layout'
+import ContractForm from "../components/ContractForm";
+import Hero from "../components/Hero";
+import Layout from "../components/Layout";
+import { useWallet } from "../services/providers/MintbaseWalletContext";
 
-const IndexPage = () => (
-  <Layout title="Home | Next.js + TypeScript Example">
-    <h1>Hello Next.js 👋</h1>
-    <p>
-      <Link href="/about">
-        <a>About</a>
-      </Link>
-    </p>
-  </Layout>
-)
+const IndexPage = () => {
+  const { wallet } = useWallet();
+  return (
+    <Layout title="Mintbase Contract Manager">
+      <main className="bg-light-white">
+        <div className="h-screen flex justify-center mx-24">
+          {wallet?.isConnected ? <ContractForm /> : <Hero />}
+        </div>
+      </main>
+    </Layout>
+  );
+};
 
-export default IndexPage
+export default IndexPage;
