@@ -35,7 +35,7 @@ const ContractForm = () => {
     <div>
       Select your contract
       <div
-        className={`select-wrapper flex items-center justify-between rounded relative border-2 border-light-green py-1 px-3`}
+        className={`select-wrapper flex items-center justify-between rounded relative border-2 border-light-green py-1.5 px-3`}
       >
         <select
           id="select"

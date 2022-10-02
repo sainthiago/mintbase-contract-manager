@@ -8,13 +8,15 @@ const IndexPage = () => {
   return (
     <Layout title="Mintbase Contract Manager">
       <main className="bg-light-white">
-        <div className="h-screen flex justify-center mx-24">
-          {wallet?.isConnected && wallet?.activeAccount ? (
-            <ContractForm />
-          ) : (
+        {!wallet?.isConnected ? (
+          <div className="h-screen flex justify-center mx-24">
             <Hero />
-          )}
-        </div>
+          </div>
+        ) : (
+          <div className="h-screen flex mx-24">
+            <ContractForm />
+          </div>
+        )}
       </main>
     </Layout>
   );
