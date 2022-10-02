@@ -1,4 +1,4 @@
-import ApolloClient from "apollo-client";
+import { ApolloClient } from "@apollo/client";
 import { WebSocketLink } from "apollo-link-ws";
 import { HttpLink } from "apollo-link-http";
 import { split } from "apollo-link";
@@ -52,7 +52,9 @@ const createApolloClient = (graphUri?: string) => {
 
   const client = new ApolloClient({
     ssrMode: typeof window === "undefined",
+    // @ts-ignore: Unreachable code error
     link: splitLink,
+    // @ts-ignore: Unreachable code error
     cache: new InMemoryCache(),
   });
 

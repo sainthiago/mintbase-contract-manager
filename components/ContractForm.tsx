@@ -8,7 +8,7 @@ const ContractForm = () => {
   const { wallet } = useWallet();
 
   const accountId = wallet?.activeAccount?.accountId;
-  console.log(accountId)
+  console.log(wallet);
 
   const { refetch: fetchStores } = useQuery(GET_STORES, {
     variables: {
@@ -18,7 +18,9 @@ const ContractForm = () => {
       if (!accountId) {
         return;
       }
+
       if (data && data.mb_store_minters?.length) {
+        console.log(data);
         setStores(
           data.mb_store_minters.map(({ nft_contract_id }) => nft_contract_id)
         );
@@ -28,16 +30,16 @@ const ContractForm = () => {
       console.error(error);
     },
   });
-  
+
   return (
     <div>
       Select your contract
       <div
-        className={`select-wrapper flex items-center justify-between rounded relative`}
+        className={`select-wrapper flex items-center justify-between rounded relative border-2 border-light-green py-1 px-3`}
       >
         <select
           id="select"
-          className="select-field appearance-none relative z-10"
+          className="bg-transparent focus:outline-none w-full cursor-pointer"
           //   onChange={(event) => onValueChange(event.target.value)}
         >
           {stores.map((store) => (
