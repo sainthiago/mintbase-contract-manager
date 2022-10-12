@@ -63,6 +63,7 @@ export const WalletProvider = (props: IWalletProvider) => {
   const [connected, setConnected] = useState(false);
 
   const initWallet = async () => {
+    console.log(network)
     const { data: walletData, error } = await new Wallet().init({
       networkName: network ?? Network.testnet,
       chain: chain ?? Chain.near,

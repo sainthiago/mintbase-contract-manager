@@ -9,6 +9,7 @@ import {
   GRAPH_MAINNET_HTTPS_URI,
   GRAPH_TESTNET_HTTPS_URI,
 } from "../constants/mintbase";
+import { Network } from "mintbase";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const apolloClient = useApollo({
@@ -21,8 +22,17 @@ function MyApp({ Component, pageProps }: AppProps) {
     },
   });
 
+  if (typeof window === "undefined") return null;
+  
+  const networkDetails = window.location.host
+    ? window.location.host.split(".")[0]
+    : null;
+
   return (
-    <WalletProvider apiKey={process.env.NEXT_PUBLIC_MINTBASEJS_API_KEY || ""}>
+    <WalletProvider
+      apiKey={process.env.NEXT_PUBLIC_MINTBASEJS_API_KEY || ""}
+      network={networkDetails as Network}
+    >
       <ApolloProvider client={apolloClient}>
         <Component {...pageProps} />
       </ApolloProvider>
