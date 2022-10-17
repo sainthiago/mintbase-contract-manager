@@ -32,37 +32,47 @@ const ContractForm = () => {
   });
 
   return (
-    <>
-      <div>
-        Select your contract
-        <div
-          className={`select-wrapper flex items-center justify-between rounded relative border-2 border-light-green py-1.5 px-3`}
-        >
-          <select
-            id="select"
-            className="bg-transparent focus:outline-none w-full cursor-pointer"
-            //   onChange={(event) => onValueChange(event.target.value)}
+    <div className="w-full mt-24">
+      <div className="flex justify-between mb-16">
+        <p className="font-bold text-2xl text-light-black">
+          Manage your smart contract
+        </p>
+        <button className="">+ NEW</button>
+      </div>
+
+      <div className="flex flex-col gap-12">
+        <div>
+          Select your contract
+          <div
+            className={`flex items-center justify-between rounded relative border-2 border-light-green py-1.5 px-3 w-48`}
           >
-            {stores.map((store) => (
-              <option value={store}>{store}</option>
-            ))}
-          </select>
+            <select
+              id="select"
+              className="bg-transparent focus:outline-none w-full cursor-pointer"
+              //   onChange={(event) => onValueChange(event.target.value)}
+            >
+              {stores.map((store) => (
+                <option value={store}>{store}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+        <div>
+          <div>Add new minter</div>
+          <input />
+        </div>
+
+        <div>
+          <div>Remove minter</div>
+          <input />
+        </div>
+
+        <div>
+          <div>Transfer ownership</div>
+          <input />
         </div>
       </div>
-      <div>
-        Add new minter
-        <input />
-      </div>
-      <div>
-        Remove minter
-        <input />
-      </div>
-      <div>
-        Transfer ownership
-        <input />
-      </div>
-      <button>+ NEW</button>
-    </>
+    </div>
   );
 };
 
