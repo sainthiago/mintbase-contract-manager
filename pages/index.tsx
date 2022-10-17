@@ -14,7 +14,7 @@ const IndexPage = () => {
             <Hero />
           </div>
         ) : (
-          <div className="h-screen flex mx-24">
+          <div className="h-screen flex mx-12 md:mx-48 lg:mx-64">
             <ContractForm />
           </div>
         )}
