@@ -11,6 +11,7 @@ const ContractForm = () => {
   const [addMintersModal, setAddMintersModal] = useState(false);
   const [removeMintersModal, setRemoveMintersModal] = useState(false);
   const [transferOwnershipModal, setTransferOwnershipModal] = useState(false);
+  const [newStoreModal, setNewStoreModal] = useState(false);
 
   const accountId = wallet?.activeAccount?.accountId;
   console.log(wallet);
@@ -43,7 +44,10 @@ const ContractForm = () => {
           <p className="font-bold text-2xl text-light-black">
             Manage your smart contract
           </p>
-          <button className="font-bold block w-fit py-2 px-4 text-sm rounded-full bg-light-green text-white cursor-pointer transform transition duration-500 hover:scale-105 hover:-translate-y-0.5 hover:bg-light-black">
+          <button
+            className="font-bold block w-fit py-2 px-4 text-sm rounded-full bg-light-green text-white cursor-pointer transform transition duration-500 hover:scale-105 hover:-translate-y-0.5 hover:bg-light-black"
+            onClick={() => setNewStoreModal(true)}
+          >
             + New
           </button>
         </div>
@@ -120,6 +124,21 @@ const ContractForm = () => {
       <ReactSimpleModal
         open={transferOwnershipModal}
         onClose={() => setTransferOwnershipModal(false)}
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            color: "white",
+          }}
+        >
+          <h1>Hello!</h1>
+        </div>
+      </ReactSimpleModal>
+      <ReactSimpleModal
+        open={newStoreModal}
+        onClose={() => setNewStoreModal(false)}
       >
         <div
           style={{
