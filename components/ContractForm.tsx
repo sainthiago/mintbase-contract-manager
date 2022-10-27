@@ -3,6 +3,7 @@ import { useState } from "react";
 import { ReactSimpleModal } from "react-awesome-simple-modal";
 import { GET_STORES } from "../queries/stores.graphql";
 import { useWallet } from "../services/providers/MintbaseWalletContext";
+import Modal from "./Modal";
 
 const ContractForm = () => {
   const [stores, setStores] = useState<string[]>([]);
@@ -91,66 +92,15 @@ const ContractForm = () => {
           </div>
         </div>
       </div>
-      <ReactSimpleModal
-        open={addMintersModal}
-        onClose={() => setAddMintersModal(false)}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            color: "white",
-          }}
-        >
-          <h1>Hello!</h1>
-        </div>
-      </ReactSimpleModal>
-      <ReactSimpleModal
-        open={removeMintersModal}
-        onClose={() => setRemoveMintersModal(false)}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            color: "white",
-          }}
-        >
-          <h1>Hello!</h1>
-        </div>
-      </ReactSimpleModal>
-      <ReactSimpleModal
-        open={transferOwnershipModal}
-        onClose={() => setTransferOwnershipModal(false)}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            color: "white",
-          }}
-        >
-          <h1>Hello!</h1>
-        </div>
-      </ReactSimpleModal>
-      <ReactSimpleModal
-        open={newStoreModal}
-        onClose={() => setNewStoreModal(false)}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            color: "white",
-          }}
-        >
-          <h1>Hello!</h1>
-        </div>
-      </ReactSimpleModal>
+      <Modal isOpen={addMintersModal} setIsOpen={setAddMintersModal}>
+        <p>Add Minters</p>
+      </Modal>
+      <Modal isOpen={removeMintersModal} setIsOpen={setRemoveMintersModal}>
+        <p>Remove Minters</p>
+      </Modal>
+      <Modal isOpen={newStoreModal} setIsOpen={setNewStoreModal}>
+        <p>New Store</p>
+      </Modal>
     </>
   );
 };
