@@ -1,4 +1,7 @@
+import { debounce } from "lodash";
 import { useMintersController } from "../../controllers/useMintersController.controller";
+import { getCurrentRpc } from "../../utils/getCurrentRpc";
+import { walletExists } from "../../utils/walletExists";
 
 const ManageMintersModal = ({ storeId }: { storeId: string }) => {
   const {
@@ -7,6 +10,12 @@ const ManageMintersModal = ({ storeId }: { storeId: string }) => {
     isLoadingMinters,
     minterAccounts,
   } = useMintersController(storeId);
+
+  const validateAccount = async (account: string) => {
+    const valid = await walletExists(account, getCurrentRpc());
+
+    return valid;
+  };
 
   return (
     <div className="flex flex-col justify-between">
@@ -30,7 +39,13 @@ const ManageMintersModal = ({ storeId }: { storeId: string }) => {
       <div>
         <p className="mb-4 font-bold">Add minter</p>
         <div className="flex gap-4">
-          <input className="rounded relative border-2 border-light-green py-1.5 px-3 bg-transparent focus:outline-none w-full" />
+          <input
+            className="rounded relative border-2 border-light-green py-1.5 px-3 bg-transparent focus:outline-none w-full"
+            onChange={debounce(async (e) => {
+              const value = e.target.value ?? null;
+              await validateAccount(value);
+            }, 500)}
+          />
           <button className="block w-fit py-2 px-4 text-sm rounded-full bg-light-green text-white cursor-pointer transform transition duration-500 hover:scale-105 hover:-translate-y-0.5 hover:bg-light-black">
             Confirm
           </button>
