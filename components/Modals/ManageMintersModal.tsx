@@ -17,10 +17,8 @@ const ManageMintersModal = ({ storeId }: { storeId: string }) => {
   const validateWallet = async (account: string) => {
     const valid = await walletExists(account, getCurrentRpc());
 
-    console.log(valid)
     setIsValidWallet(valid);
-    console.log(isValidWallet)
-    return
+    return;
   };
 
   return (
@@ -50,7 +48,6 @@ const ManageMintersModal = ({ storeId }: { storeId: string }) => {
               className="rounded relative border-2 border-light-green py-1.5 px-3 bg-transparent focus:outline-none"
               onChange={debounce(async (e) => {
                 const value = e.target.value ?? null;
-                console.log('lshj')
                 await validateWallet(value);
               }, 500)}
             />

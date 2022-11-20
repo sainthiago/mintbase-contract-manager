@@ -17,7 +17,6 @@ const ContractForm = () => {
   const [newStoreModal, setNewStoreModal] = useState(false);
 
   const accountId = wallet?.activeAccount?.accountId;
-  console.log(wallet);
 
   const { refetch: fetchStores } = useQuery(GET_STORES, {
     variables: {
