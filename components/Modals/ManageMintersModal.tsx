@@ -1,9 +1,12 @@
 import { debounce } from "lodash";
+import { useState } from "react";
 import { useMintersController } from "../../controllers/useMintersController.controller";
 import { getCurrentRpc } from "../../utils/getCurrentRpc";
 import { walletExists } from "../../utils/walletExists";
 
 const ManageMintersModal = ({ storeId }: { storeId: string }) => {
+  const [isValidWallet, setIsValidWallet] = useState(true);
+
   const {
     handleAddMinter,
     handleRevokeMinter,
@@ -11,10 +14,13 @@ const ManageMintersModal = ({ storeId }: { storeId: string }) => {
     minterAccounts,
   } = useMintersController(storeId);
 
-  const validateAccount = async (account: string) => {
+  const validateWallet = async (account: string) => {
     const valid = await walletExists(account, getCurrentRpc());
 
-    return valid;
+    console.log(valid)
+    setIsValidWallet(valid);
+    console.log(isValidWallet)
+    return
   };
 
   return (
@@ -39,16 +45,29 @@ const ManageMintersModal = ({ storeId }: { storeId: string }) => {
       <div>
         <p className="mb-4 font-bold">Add minter</p>
         <div className="flex gap-4">
-          <input
-            className="rounded relative border-2 border-light-green py-1.5 px-3 bg-transparent focus:outline-none w-full"
-            onChange={debounce(async (e) => {
-              const value = e.target.value ?? null;
-              await validateAccount(value);
-            }, 500)}
-          />
-          <button className="block w-fit py-2 px-4 text-sm rounded-full bg-light-green text-white cursor-pointer transform transition duration-500 hover:scale-105 hover:-translate-y-0.5 hover:bg-light-black">
-            Confirm
-          </button>
+          <div className="w-full">
+            <input
+              className="rounded relative border-2 border-light-green py-1.5 px-3 bg-transparent focus:outline-none"
+              onChange={debounce(async (e) => {
+                const value = e.target.value ?? null;
+                console.log('lshj')
+                await validateWallet(value);
+              }, 500)}
+            />
+
+            <p
+              className={`${
+                !isValidWallet ? "block" : "hidden"
+              }text-sm text-red-600 mt-2`}
+            >
+              This wallet doesn&apos;t exist.
+            </p>
+          </div>
+          <div>
+            <button className="block w-fit py-2 px-4 text-sm rounded-full bg-light-green text-white cursor-pointer transform transition duration-500 hover:scale-105 hover:-translate-y-0.5 hover:bg-light-black">
+              Confirm
+            </button>
+          </div>
         </div>
       </div>
     </div>
