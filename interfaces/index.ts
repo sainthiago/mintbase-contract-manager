@@ -1,10 +1,8 @@
-// You can include shared interfaces/types in a separate file
-// and then use them in any component by importing them. For
-// example, to import the interface below do:
-//
-// import { User } from 'path/to/interfaces';
+export interface IMinter {
+  nft_contract_id: string;
+  minter_id: string;
+}
 
-export type User = {
-  id: number
-  name: string
+export interface IMinters {
+  mb_store_minters: IMinter[];
 }
