@@ -5,7 +5,7 @@ import { IMinters } from "../interfaces";
 import { GET_MINTERS_BY_STORE_ID } from "../queries/minters.graphql";
 import { useWallet } from "../services/providers/MintbaseWalletContext";
 
-export const useStoreSettingsController = (storeId: string) => {
+export const useMintersController = (storeId: string) => {
   const { wallet } = useWallet();
 
   // store minters state
@@ -32,65 +32,39 @@ export const useStoreSettingsController = (storeId: string) => {
     },
   });
 
-  const handleAddMinters = async (minters: string[]) => {
-    if (minters.length === 1) {
-      await wallet.grantMinter(minters[0], storeId as string, {
-        callbackUrl: `${window.location.origin}/wallet-callback`,
-        meta: JSON.stringify({
-          type: TransactionSuccessEnum.ADD_MINTER,
-          args: {
-            minterId: pendingMinterAccount,
-            contractName: storeId,
-          },
-        }),
-      });
-    } else {
-      await wallet.batchChangeMinters(minters, [], storeId as string, {
-        callbackUrl: `${window.location.origin}/wallet-callback`,
-        meta: JSON.stringify({
-          type: TransactionSuccessEnum.ADD_MINTER,
-          args: {
-            minterId: pendingMinterAccount,
-            contractName: storeId,
-          },
-        }),
-      });
-    }
-
+  const handleAddMinter = async (minters: string) => {
+    await wallet.grantMinter(minters[0], storeId as string, {
+      callbackUrl: `${window.location.origin}/wallet-callback`,
+      meta: JSON.stringify({
+        type: TransactionSuccessEnum.ADD_MINTER,
+        args: {
+          minterId: pendingMinterAccount,
+          contractName: storeId,
+        },
+      }),
+    });
     return null;
   };
 
-  const handleRevokeMinters = async (minters: string[]) => {
-    if (minters.length === 1) {
-      wallet.revokeMinter(minters[0], storeId as string, {
-        callbackUrl: `${window.location.origin}/wallet-callback`,
-        meta: JSON.stringify({
-          type: TransactionSuccessEnum.REVOKE_MINTER,
-          args: {
-            minterId: pendingMinterAccount,
-            contractName: storeId,
-          },
-        }),
-      });
-    } else {
-      wallet.batchChangeMinters([], minters, storeId as string, {
-        callbackUrl: `${window.location.origin}/wallet-callback`,
-        meta: JSON.stringify({
-          type: TransactionSuccessEnum.REVOKE_MINTER,
-          args: {
-            minterId: pendingMinterAccount,
-            contractName: storeId,
-          },
-        }),
-      });
-    }
+  const handleRevokeMinter = async (minter: string) => {
+    wallet.revokeMinter(minter, storeId as string, {
+      callbackUrl: `${window.location.origin}/wallet-callback`,
+      meta: JSON.stringify({
+        type: TransactionSuccessEnum.REVOKE_MINTER,
+        args: {
+          minterId: pendingMinterAccount,
+          contractName: storeId,
+        },
+      }),
+    });
+
     return null;
   };
 
   return {
     minterAccounts,
     isLoadingMinters,
-    handleAddMinters,
-    handleRevokeMinters,
+    handleAddMinter,
+    handleRevokeMinter,
   };
 };
