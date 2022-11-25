@@ -12,7 +12,7 @@ const Modal = ({
 }) => {
   return (
     <ReactSimpleModal open={isOpen} onClose={() => setIsOpen(false)}>
-      <div className="flex bg-white w-1/2 h-96 rounded m-auto p-8">
+      <div className="flex bg-white w-1/2 h-fit rounded m-auto p-8">
         {children}
       </div>
     </ReactSimpleModal>
