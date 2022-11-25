@@ -90,7 +90,7 @@ const ContractForm = () => {
         </div>
       </div>
       <Modal isOpen={manageMintersModal} setIsOpen={setManageMintersModal}>
-        <ManageMintersModal storeId={selectedStoreId} />
+        <ManageMintersModal storeId={selectedStoreId} accountId={accountId} />
       </Modal>
       <Modal
         isOpen={transferOwnershipModal}

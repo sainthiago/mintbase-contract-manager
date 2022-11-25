@@ -46,18 +46,30 @@ export const useMintersController = (storeId: string) => {
     return null;
   };
 
-  const handleRevokeMinter = async (minter: string) => {
-    wallet.revokeMinter(minter, storeId as string, {
-      callbackUrl: `${window.location.origin}/wallet-callback`,
-      meta: JSON.stringify({
-        type: TransactionSuccessEnum.REVOKE_MINTER,
-        args: {
-          minterId: pendingMinterAccount,
-          contractName: storeId,
-        },
-      }),
-    });
-
+  const handleRevokeMinters = async (minters: string[]) => {
+    if (minters.length === 1) {
+      wallet.revokeMinter(minters[0], storeId as string, {
+        callbackUrl: `${window.location.origin}/wallet-callback`,
+        meta: JSON.stringify({
+          type: TransactionSuccessEnum.REVOKE_MINTER,
+          args: {
+            minterId: pendingMinterAccount,
+            contractName: storeId,
+          },
+        }),
+      });
+    } else {
+      wallet.batchChangeMinters([], minters, storeId as string, {
+        callbackUrl: `${window.location.origin}/wallet-callback`,
+        meta: JSON.stringify({
+          type: TransactionSuccessEnum.REVOKE_MINTER,
+          args: {
+            minterId: pendingMinterAccount,
+            contractName: storeId,
+          },
+        }),
+      });
+    }
     return null;
   };
 
@@ -65,6 +77,6 @@ export const useMintersController = (storeId: string) => {
     minterAccounts,
     isLoadingMinters,
     handleAddMinter,
-    handleRevokeMinter,
+    handleRevokeMinters,
   };
 };

@@ -1,5 +1,5 @@
 import { debounce } from "lodash";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import { useMintersController } from "../../controllers/useMintersController.controller";
@@ -8,12 +8,19 @@ import { walletExists } from "../../utils/walletExists";
 
 const animatedComponents = makeAnimated();
 
-const ManageMintersModal = ({ storeId }: { storeId: string }) => {
+const ManageMintersModal = ({
+  storeId,
+  accountId,
+}: {
+  storeId: string;
+  accountId: string;
+}) => {
   const [isValidWallet, setIsValidWallet] = useState(true);
+  const [selectedMinters, setSelectedMinters] = useState<string[]>([]);
 
   const {
     handleAddMinter,
-    handleRevokeMinter,
+    handleRevokeMinters,
     isLoadingMinters,
     minterAccounts,
   } = useMintersController(storeId);
@@ -25,12 +32,18 @@ const ManageMintersModal = ({ storeId }: { storeId: string }) => {
     return;
   };
 
+  const updateMinters = (event) => {
+    setSelectedMinters(event.map((minter) => minter.value));
+  };
+
+  const disableRemoveBtn = selectedMinters.length < 1;
+
   return (
     <div className="flex flex-col justify-between w-full">
       <div>
         <p className="mb-4 font-bold text-lg mb-4">Manage Minters</p>
         <div>
-          <p className="mb-4 font-bold">Remove</p>
+          <p className="mb-4 font-bold">Remove minters</p>
           <div className="flex gap-4">
             <div className="w-full">
               <Select
@@ -38,15 +51,23 @@ const ManageMintersModal = ({ storeId }: { storeId: string }) => {
                 components={animatedComponents}
                 isMulti
                 placeholder="Select at least one minter"
-                options={minterAccounts.map((minter) => {
-                  return { value: minter, label: minter.split(".")[0] };
-                })}
+                onChange={updateMinters}
+                options={minterAccounts
+                  .filter((minter) => minter !== accountId)
+                  .map((minter) => {
+                    return { value: minter, label: minter.split(".")[0] };
+                  })}
               />
             </div>
 
             <button
-              className="block w-fit py-2 px-4 text-sm rounded-full bg-light-green text-white cursor-pointer transform transition duration-500 hover:scale-105 hover:-translate-y-0.5 hover:bg-light-black"
-              onClick={() => handleRevokeMinter(minter)}
+              className={`block w-fit py-2 px-4 text-sm rounded-full text-white ${
+                disableRemoveBtn
+                  ? "cursor-not-allowed bg-gray-400"
+                  : "bg-light-green cursor-pointer transform transition duration-500 hover:scale-105 hover:-translate-y-0.5 hover:bg-light-black"
+              }`}
+              disabled={disableRemoveBtn}
+              onClick={() => handleRevokeMinters(selectedMinters)}
             >
               Confirm
             </button>
@@ -66,7 +87,7 @@ const ManageMintersModal = ({ storeId }: { storeId: string }) => {
       </div>
 
       <div>
-        <p className="mb-4 font-bold">Add</p>
+        <p className="mb-4 font-bold">Add minters</p>
         <div className="flex gap-4">
           <div className="w-full">
             <input
