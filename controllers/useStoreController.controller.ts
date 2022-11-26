@@ -1,7 +1,25 @@
+import { useLazyQuery } from "@apollo/client";
+import { CHECK_STORE } from "../queries/stores.graphql";
 import { useWallet } from "../services/providers/MintbaseWalletContext";
 
 export const useStoreController = () => {
   const { wallet } = useWallet();
+
+  const [checkStoreNameExists] = useLazyQuery<any>(CHECK_STORE);
+
+  const checkStoreName = async (store: string) => {
+    const req = await checkStoreNameExists({
+      variables: { name: store },
+    });
+
+    const { data, error } = req;
+
+    if (error) {
+      return false;
+    }
+
+    return data?.nft_contracts.length === 0;
+  };
 
   const transferOwnership = async (newOwner: string, storeId: string) => {
     await wallet.transferStoreOwnership(newOwner, storeId as string, {
@@ -32,5 +50,6 @@ export const useStoreController = () => {
   return {
     transferOwnership,
     deployStore,
+    checkStoreName,
   };
 };

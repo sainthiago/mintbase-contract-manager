@@ -18,3 +18,11 @@ export const GET_STORES = gql`
     }
   }
 `;
+
+export const CHECK_STORE = gql`
+  query CheckStore($name: String!) {
+    nft_contracts(where: { name: { _eq: $name } }) {
+      name
+    }
+  }
+`;

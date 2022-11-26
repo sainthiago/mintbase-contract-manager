@@ -27,7 +27,7 @@ const TransferOwnershipModal = ({ storeId }: { storeId: string }) => {
   return (
     <div className="flex flex-col gap-12 w-full">
       <div>
-        <p className="mb-4 font-bold text-lg mb-4">Manage Minters</p>
+        <p className="mb-4 font-bold text-lg mb-4">Transfer Ownership</p>
         <div>
           <p className="mb-4 font-bold">
             Transfer your store ownership to another account.
