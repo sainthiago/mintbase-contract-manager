@@ -66,14 +66,15 @@ const ManageMintersModal = ({
                   })}
               />
             </div>
-
-            <button
-              className={BUTTON_CLASS(disableRemoveBtn)}
-              disabled={disableRemoveBtn}
-              onClick={() => handleRevokeMinters(selectedMinters)}
-            >
-              Confirm
-            </button>
+            <div>
+              <button
+                className={BUTTON_CLASS(disableRemoveBtn)}
+                disabled={disableRemoveBtn}
+                onClick={() => handleRevokeMinters(selectedMinters)}
+              >
+                Confirm
+              </button>
+            </div>
           </div>
         </div>
       </div>
