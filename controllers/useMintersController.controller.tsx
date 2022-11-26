@@ -25,7 +25,7 @@ export const useMintersController = (storeId: string) => {
   });
 
   const handleAddMinter = async (minter: string) => {
-    await wallet.grantMinter(minter[0], storeId as string, {
+    await wallet.grantMinter(minter, storeId as string, {
       callbackUrl: `${window.location.origin}/wallet-callback`,
       meta: JSON.stringify({
         type: TransactionSuccessEnum.ADD_MINTER,
