@@ -3,6 +3,7 @@ import { useState } from "react";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import { useMintersController } from "../../controllers/useMintersController.controller";
+import { BUTTON_CLASS } from "../../utils/classes";
 import { getCurrentRpc } from "../../utils/getCurrentRpc";
 import { walletExists } from "../../utils/walletExists";
 
@@ -43,14 +44,6 @@ const ManageMintersModal = ({
 
   const disableRemoveBtn = selectedMinters.length < 1;
   const disableAddBtn = !minterWallet;
-
-  const BUTTON_CLASS = (condition: boolean) => {
-    return `block w-fit py-2 px-4 text-sm rounded-full text-white ${
-      condition
-        ? "cursor-not-allowed bg-gray-400"
-        : "bg-light-green cursor-pointer transform transition duration-500 hover:scale-105 hover:-translate-y-0.5 hover:bg-light-black"
-    }`;
-  };
 
   return (
     <div className="flex flex-col gap-12 w-full">
