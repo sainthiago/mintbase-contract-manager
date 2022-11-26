@@ -1,5 +1,5 @@
 import { debounce } from "lodash";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import { useMintersController } from "../../controllers/useMintersController.controller";
@@ -17,6 +17,7 @@ const ManageMintersModal = ({
 }) => {
   const [isValidWallet, setIsValidWallet] = useState(true);
   const [selectedMinters, setSelectedMinters] = useState<string[]>([]);
+  const [minterWallet, setMinterWallet] = useState(null);
 
   const {
     handleAddMinter,
@@ -26,10 +27,14 @@ const ManageMintersModal = ({
   } = useMintersController(storeId);
 
   const validateWallet = async (account: string) => {
+    if (!account) {
+      setIsValidWallet(true);
+      return true;
+    }
     const valid = await walletExists(account, getCurrentRpc());
 
     setIsValidWallet(valid);
-    return;
+    return valid;
   };
 
   const updateMinters = (event) => {
@@ -37,6 +42,15 @@ const ManageMintersModal = ({
   };
 
   const disableRemoveBtn = selectedMinters.length < 1;
+  const disableAddBtn = !minterWallet;
+
+  const BUTTON_CLASS = (condition: boolean) => {
+    return `block w-fit py-2 px-4 text-sm rounded-full text-white ${
+      condition
+        ? "cursor-not-allowed bg-gray-400"
+        : "bg-light-green cursor-pointer transform transition duration-500 hover:scale-105 hover:-translate-y-0.5 hover:bg-light-black"
+    }`;
+  };
 
   return (
     <div className="flex flex-col gap-12 w-full">
@@ -50,7 +64,7 @@ const ManageMintersModal = ({
                 closeMenuOnSelect
                 components={animatedComponents}
                 isMulti
-                placeholder="Select at least one minter"
+                placeholder="select at least one minter"
                 onChange={updateMinters}
                 options={minterAccounts
                   .filter((minter) => minter !== accountId)
@@ -61,11 +75,7 @@ const ManageMintersModal = ({
             </div>
 
             <button
-              className={`block w-fit py-2 px-4 text-sm rounded-full text-white ${
-                disableRemoveBtn
-                  ? "cursor-not-allowed bg-gray-400"
-                  : "bg-light-green cursor-pointer transform transition duration-500 hover:scale-105 hover:-translate-y-0.5 hover:bg-light-black"
-              }`}
+              className={BUTTON_CLASS(disableRemoveBtn)}
               disabled={disableRemoveBtn}
               onClick={() => handleRevokeMinters(selectedMinters)}
             >
@@ -83,20 +93,28 @@ const ManageMintersModal = ({
               className="rounded relative border-2 border-light-green py-1.5 px-3 bg-transparent focus:outline-none w-full"
               onChange={debounce(async (e) => {
                 const value = e.target.value ?? null;
-                await validateWallet(value);
+                const valid = await validateWallet(value);
+
+                if (!valid) return;
+                setMinterWallet(value);
               }, 500)}
+              placeholder="account.near"
             />
 
             <p
               className={`${
                 !isValidWallet ? "block" : "hidden"
-              }text-sm text-red-600 mt-2`}
+              } text-sm text-red-600 mt-2`}
             >
               This wallet doesn&apos;t exist.
             </p>
           </div>
           <div>
-            <button className="block w-fit py-2 px-4 text-sm rounded-full bg-light-green text-white cursor-pointer transform transition duration-500 hover:scale-105 hover:-translate-y-0.5 hover:bg-light-black">
+            <button
+              className={BUTTON_CLASS(disableAddBtn)}
+              disabled={disableAddBtn}
+              onClick={() => handleAddMinter(minterWallet)}
+            >
               Confirm
             </button>
           </div>
