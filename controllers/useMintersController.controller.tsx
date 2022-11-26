@@ -8,16 +8,8 @@ import { useWallet } from "../services/providers/MintbaseWalletContext";
 export const useMintersController = (storeId: string) => {
   const { wallet } = useWallet();
 
-  // store minters state
   const [minterAccounts, setMinterAccounts] = useState<string[]>([]);
-  const [pendingMinterAccount, setPendingMinterAccount] = useState<
-    string | null
-  >(null);
 
-  //   const [minterSavedStatus, setMinterSavedStatus] =
-  //     useState<SavedStatus | null>(null);
-
-  // query for minters
   const { loading: isLoadingMinters } = useQuery(GET_MINTERS_BY_STORE_ID, {
     variables: {
       contractId: storeId,
@@ -32,13 +24,13 @@ export const useMintersController = (storeId: string) => {
     },
   });
 
-  const handleAddMinter = async (minters: string) => {
-    await wallet.grantMinter(minters[0], storeId as string, {
+  const handleAddMinter = async (minter: string) => {
+    await wallet.grantMinter(minter[0], storeId as string, {
       callbackUrl: `${window.location.origin}/wallet-callback`,
       meta: JSON.stringify({
         type: TransactionSuccessEnum.ADD_MINTER,
         args: {
-          minterId: pendingMinterAccount,
+          minterId: minter,
           contractName: storeId,
         },
       }),
@@ -53,7 +45,7 @@ export const useMintersController = (storeId: string) => {
         meta: JSON.stringify({
           type: TransactionSuccessEnum.REVOKE_MINTER,
           args: {
-            minterId: pendingMinterAccount,
+            minterId: minters[0],
             contractName: storeId,
           },
         }),
@@ -64,7 +56,7 @@ export const useMintersController = (storeId: string) => {
         meta: JSON.stringify({
           type: TransactionSuccessEnum.REVOKE_MINTER,
           args: {
-            minterId: pendingMinterAccount,
+            minterId: minters,
             contractName: storeId,
           },
         }),
