@@ -4,7 +4,6 @@ import { useState } from "react";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import { useMintersController } from "../../controllers/useMintersController.controller";
-import { BUTTON_CLASS } from "../../utils/classes";
 import { getCurrentRpc } from "../../utils/getCurrentRpc";
 
 const animatedComponents = makeAnimated();
@@ -68,7 +67,11 @@ const ManageMintersModal = ({
             </div>
             <div>
               <button
-                className={BUTTON_CLASS(disableRemoveBtn)}
+                className={`block w-fit py-2 px-4 text-sm rounded-full text-white ${
+                  disableRemoveBtn
+                    ? "cursor-not-allowed bg-gray-400"
+                    : "bg-light-green cursor-pointer transform transition duration-500 hover:scale-105 hover:-translate-y-0.5 hover:bg-light-black"
+                }`}
                 disabled={disableRemoveBtn}
                 onClick={() => handleRevokeMinters(selectedMinters)}
               >
@@ -105,7 +108,11 @@ const ManageMintersModal = ({
           </div>
           <div>
             <button
-              className={BUTTON_CLASS(disableAddBtn)}
+              className={`block w-fit py-2 px-4 text-sm rounded-full text-white ${
+                disableAddBtn
+                  ? "cursor-not-allowed bg-gray-400"
+                  : "bg-light-green cursor-pointer transform transition duration-500 hover:scale-105 hover:-translate-y-0.5 hover:bg-light-black"
+              }`}
               disabled={disableAddBtn}
               onClick={() => handleAddMinter(minterWallet)}
             >

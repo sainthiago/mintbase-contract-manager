@@ -1,7 +1,6 @@
 import { debounce } from "lodash";
 import { useState } from "react";
 import { useStoreController } from "../../controllers/useStoreController.controller";
-import { BUTTON_CLASS } from "../../utils/classes";
 
 const CreateStoreModal = () => {
   const [isValidStoreName, setIsValidStoreName] = useState(true);
@@ -101,7 +100,11 @@ const CreateStoreModal = () => {
 
         <div className="mt-8 flex justify-end">
           <button
-            className={BUTTON_CLASS(disableCreateStoreBtn)}
+            className={`block w-fit py-2 px-4 text-sm rounded-full text-white ${
+              disableCreateStoreBtn
+                ? "cursor-not-allowed bg-gray-400"
+                : "bg-light-green cursor-pointer transform transition duration-500 hover:scale-105 hover:-translate-y-0.5 hover:bg-light-black"
+            }`}
             disabled={disableCreateStoreBtn}
             onClick={() => deployStore(storeName, storeSymbol)}
           >
