@@ -5,3 +5,4 @@ export const BUTTON_CLASS = (condition: boolean) => {
       : "bg-light-green cursor-pointer transform transition duration-500 hover:scale-105 hover:-translate-y-0.5 hover:bg-light-black"
   }`;
 };
+
