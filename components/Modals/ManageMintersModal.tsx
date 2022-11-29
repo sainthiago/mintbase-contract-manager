@@ -1,11 +1,11 @@
 import { debounce } from "lodash";
+import { nearWalletExists } from "near-wallet-validator";
 import { useState } from "react";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import { useMintersController } from "../../controllers/useMintersController.controller";
 import { BUTTON_CLASS } from "../../utils/classes";
 import { getCurrentRpc } from "../../utils/getCurrentRpc";
-import { walletExists } from "../../utils/walletExists";
 
 const animatedComponents = makeAnimated();
 
@@ -32,7 +32,7 @@ const ManageMintersModal = ({
       setIsValidWallet(true);
       return true;
     }
-    const valid = await walletExists(account, getCurrentRpc());
+    const valid = await nearWalletExists(account, getCurrentRpc());
 
     setIsValidWallet(valid);
     return valid;

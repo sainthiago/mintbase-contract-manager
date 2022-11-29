@@ -1,9 +1,9 @@
 import { debounce } from "lodash";
+import { nearWalletExists } from "near-wallet-validator";
 import { useState } from "react";
 import { useStoreController } from "../../controllers/useStoreController.controller";
 import { BUTTON_CLASS } from "../../utils/classes";
 import { getCurrentRpc } from "../../utils/getCurrentRpc";
-import { walletExists } from "../../utils/walletExists";
 
 const TransferOwnershipModal = ({ storeId }: { storeId: string }) => {
   const [isValidWallet, setIsValidWallet] = useState(true);
@@ -16,7 +16,7 @@ const TransferOwnershipModal = ({ storeId }: { storeId: string }) => {
       setIsValidWallet(true);
       return true;
     }
-    const valid = await walletExists(account, getCurrentRpc());
+    const valid = await nearWalletExists(account, getCurrentRpc());
 
     setIsValidWallet(valid);
     return valid;

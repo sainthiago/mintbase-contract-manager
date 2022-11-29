@@ -1,7 +1,7 @@
-import { RPC_MAINNET, RPC_TESTNET } from "../constants/mintbase";
+import { NearRPC } from "near-wallet-validator";
 
 export const getCurrentRpc = () => {
   return localStorage.getItem("network") === "testnet"
-    ? RPC_TESTNET
-    : RPC_MAINNET;
+    ? NearRPC.TESTNET
+    : NearRPC.MAINNET;
 };
