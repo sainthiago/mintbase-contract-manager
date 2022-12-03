@@ -51,17 +51,6 @@ const ContractForm = () => {
             <p className="font-bold text-2xl text-light-black mb-4">
               Manage your smart contract
             </p>
-            <div className="flex items-center justify-between rounded relative border-2 border-light-green py-1.5 px-3 w-full">
-              <select
-                id="select"
-                className="bg-transparent focus:outline-none w-full cursor-pointer"
-                onChange={(event) => setSelectedStoreId(event.target.value)}
-              >
-                {stores.map((store) => (
-                  <option value={store}>{store}</option>
-                ))}
-              </select>
-            </div>
           </div>
           <div>
             <button
@@ -73,20 +62,33 @@ const ContractForm = () => {
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-8">
-          <button
-            className="block w-fit py-2 px-4 text-sm rounded-full bg-light-green text-white cursor-pointer transform transition duration-500 hover:scale-105 hover:-translate-y-0.5 hover:bg-light-black"
-            onClick={() => setManageMintersModal(true)}
-          >
-            Manage minters
-          </button>
+        <div className="flex flex-col flex-wrap gap-12 justify-center items-center">
+          <div className="flex items-center justify-between rounded relative border-2 border-light-green py-1.5 px-3 w-fit">
+            <select
+              id="select"
+              className="bg-transparent focus:outline-none w-full cursor-pointer"
+              onChange={(event) => setSelectedStoreId(event.target.value)}
+            >
+              {stores.map((store) => (
+                <option value={store}>{store}</option>
+              ))}
+            </select>
+          </div>
+          <div className="flex gap-8 flex-wrap">
+            <button
+              className="block w-fit py-2 px-4 text-sm rounded-full bg-light-green text-white cursor-pointer transform transition duration-500 hover:scale-105 hover:-translate-y-0.5 hover:bg-light-black"
+              onClick={() => setManageMintersModal(true)}
+            >
+              Manage minters
+            </button>
 
-          <button
-            className="block w-fit py-2 px-4 text-sm rounded-full bg-light-green text-white cursor-pointer transform transition duration-500 hover:scale-105 hover:-translate-y-0.5 hover:bg-light-black"
-            onClick={() => setTransferOwnershipModal(true)}
-          >
-            Transfer ownership
-          </button>
+            <button
+              className="block w-fit py-2 px-4 text-sm rounded-full bg-light-green text-white cursor-pointer transform transition duration-500 hover:scale-105 hover:-translate-y-0.5 hover:bg-light-black"
+              onClick={() => setTransferOwnershipModal(true)}
+            >
+              Transfer ownership
+            </button>
+          </div>
         </div>
       </div>
       <Modal isOpen={manageMintersModal} setIsOpen={setManageMintersModal}>
