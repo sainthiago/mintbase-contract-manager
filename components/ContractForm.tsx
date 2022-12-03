@@ -1,11 +1,15 @@
 import { useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
 import { GET_STORES } from "../queries/stores.graphql";
 import { useWallet } from "../services/providers/MintbaseWalletContext";
 import CreateStoreModal from "./Modals/CreateStoreModal";
 import ManageMintersModal from "./Modals/ManageMintersModal";
 import Modal from "./Modals/Modal";
 import TransferOwnershipModal from "./Modals/TransfersOwnershipModal";
+
+const animatedComponents = makeAnimated();
 
 const ContractForm = () => {
   const [stores, setStores] = useState<string[]>([]);
@@ -38,11 +42,6 @@ const ContractForm = () => {
     },
   });
 
-  useEffect(() => {
-    if (!stores?.length) return;
-    setSelectedStoreId(stores[0]);
-  }, [stores]);
-
   return (
     <>
       <div className="w-full mt-24">
@@ -63,27 +62,40 @@ const ContractForm = () => {
         </div>
 
         <div className="flex flex-col flex-wrap gap-12 justify-center items-center">
-          <div className="flex items-center justify-between rounded relative border-2 border-light-green py-1.5 px-3 w-fit">
-            <select
-              id="select"
-              className="bg-transparent focus:outline-none w-full cursor-pointer"
-              onChange={(event) => setSelectedStoreId(event.target.value)}
-            >
-              {stores.map((store) => (
-                <option value={store}>{store}</option>
-              ))}
-            </select>
+          <div className="flex items-center justify-between rounded relative border-2 border-light-green py-1.5 px-3 w-96">
+            <div className="w-full">
+              <Select
+                closeMenuOnSelect
+                components={animatedComponents}
+                placeholder="select one of your stores"
+                onChange={(event: any) => {
+                  console.log(event);
+                  setSelectedStoreId(event.value);
+                }}
+                options={stores.map((store) => {
+                  return { value: store, label: store };
+                })}
+              />
+            </div>
           </div>
           <div className="flex gap-8 flex-wrap">
             <button
-              className="block w-fit py-2 px-4 text-sm rounded-full bg-light-green text-white cursor-pointer transform transition duration-500 hover:scale-105 hover:-translate-y-0.5 hover:bg-light-black"
+              className={`block w-fit py-2 px-4 text-sm rounded-full text-white ${
+                !selectedStoreId
+                  ? "cursor-not-allowed bg-gray-400"
+                  : "bg-light-green cursor-pointer transform transition duration-500 hover:scale-105 hover:-translate-y-0.5 hover:bg-light-black"
+              }`}
               onClick={() => setManageMintersModal(true)}
             >
               Manage minters
             </button>
 
             <button
-              className="block w-fit py-2 px-4 text-sm rounded-full bg-light-green text-white cursor-pointer transform transition duration-500 hover:scale-105 hover:-translate-y-0.5 hover:bg-light-black"
+              className={`block w-fit py-2 px-4 text-sm rounded-full text-white ${
+                !selectedStoreId
+                  ? "cursor-not-allowed bg-gray-400"
+                  : "bg-light-green cursor-pointer transform transition duration-500 hover:scale-105 hover:-translate-y-0.5 hover:bg-light-black"
+              }`}
               onClick={() => setTransferOwnershipModal(true)}
             >
               Transfer ownership
