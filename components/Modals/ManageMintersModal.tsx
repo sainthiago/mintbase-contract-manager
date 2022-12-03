@@ -51,7 +51,7 @@ const ManageMintersModal = ({
         <p className="mb-4 font-bold text-lg mb-4">Manage Minters</p>
         <div>
           <p className="mb-4 font-bold">Remove minters</p>
-          <div className="flex gap-4">
+          <div className="flex gap-4 flex-wrap sm:flex-nowrap justify-end">
             <div className="w-full">
               <InputSelect
                 placeholder="select at least one minter"
@@ -83,7 +83,7 @@ const ManageMintersModal = ({
 
       <div>
         <p className="mb-4 font-bold">Add minters</p>
-        <div className="flex gap-4">
+        <div className="flex gap-4 flex-wrap sm:flex-nowrap justify-end">
           <div className="w-full">
             <input
               className="rounded relative border-2 border-light-green py-1.5 px-3 bg-transparent focus:outline-none w-full"
