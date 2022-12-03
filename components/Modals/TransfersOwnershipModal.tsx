@@ -31,7 +31,7 @@ const TransferOwnershipModal = ({ storeId }: { storeId: string }) => {
           <p className="mb-4 font-bold">
             Transfer your store ownership to another account.
           </p>
-          <div className="flex gap-4 w-full">
+          <div className="flex gap-4 w-full flex-wrap sm:flex-nowrap justify-end">
             <div className="w-full">
               <input
                 className="rounded relative border-2 border-light-green py-1.5 px-3 bg-transparent focus:outline-none w-full"
