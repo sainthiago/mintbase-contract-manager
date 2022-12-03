@@ -79,6 +79,7 @@ const ContractForm = () => {
                   ? "cursor-not-allowed bg-gray-400"
                   : "bg-light-green cursor-pointer transform transition duration-500 hover:scale-105 hover:-translate-y-0.5 hover:bg-light-black"
               }`}
+              disabled={!selectedStoreId}
               onClick={() => setManageMintersModal(true)}
             >
               Manage minters
@@ -90,6 +91,7 @@ const ContractForm = () => {
                   ? "cursor-not-allowed bg-gray-400"
                   : "bg-light-green cursor-pointer transform transition duration-500 hover:scale-105 hover:-translate-y-0.5 hover:bg-light-black"
               }`}
+              disabled={!selectedStoreId}
               onClick={() => setTransferOwnershipModal(true)}
             >
               Transfer ownership
