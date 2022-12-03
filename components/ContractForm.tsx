@@ -1,9 +1,10 @@
 import { useQuery } from "@apollo/client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import { GET_STORES } from "../queries/stores.graphql";
 import { useWallet } from "../services/providers/MintbaseWalletContext";
+import InputSelect from "./InputSelect";
 import CreateStoreModal from "./Modals/CreateStoreModal";
 import ManageMintersModal from "./Modals/ManageMintersModal";
 import Modal from "./Modals/Modal";
@@ -62,21 +63,14 @@ const ContractForm = () => {
         </div>
 
         <div className="flex flex-col flex-wrap gap-12 justify-center items-center">
-          <div className="flex items-center justify-between rounded relative border-2 border-light-green py-1.5 px-3 w-96">
-            <div className="w-full">
-              <Select
-                closeMenuOnSelect
-                components={animatedComponents}
-                placeholder="select one of your stores"
-                onChange={(event: any) => {
-                  console.log(event);
-                  setSelectedStoreId(event.value);
-                }}
-                options={stores.map((store) => {
-                  return { value: store, label: store };
-                })}
-              />
-            </div>
+          <div className="w-full sm:w-96">
+            <InputSelect
+              placeholder="select store"
+              options={stores.map((store) => {
+                return { value: store, label: store };
+              })}
+              setValue={setSelectedStoreId}
+            />
           </div>
           <div className="flex gap-8 flex-wrap">
             <button

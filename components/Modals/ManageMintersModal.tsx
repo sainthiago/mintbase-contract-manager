@@ -5,6 +5,7 @@ import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import { useMintersController } from "../../controllers/useMintersController.controller";
 import { getCurrentRpc } from "../../utils/getCurrentRpc";
+import InputSelect from "../InputSelect";
 
 const animatedComponents = makeAnimated();
 
@@ -52,17 +53,15 @@ const ManageMintersModal = ({
           <p className="mb-4 font-bold">Remove minters</p>
           <div className="flex gap-4">
             <div className="w-full">
-              <Select
-                closeMenuOnSelect
-                components={animatedComponents}
-                isMulti
+              <InputSelect
                 placeholder="select at least one minter"
-                onChange={updateMinters}
                 options={minterAccounts
                   .filter((minter) => minter !== accountId)
                   .map((minter) => {
                     return { value: minter, label: minter };
                   })}
+                setValue={setSelectedMinters}
+                isMultiple
               />
             </div>
             <div>
