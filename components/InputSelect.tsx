@@ -21,7 +21,6 @@ const InputSelect = ({
       components={animatedComponents}
       placeholder={placeholder}
       onChange={(event: any) => {
-        console.log(event);
         setValue(event.value);
       }}
       isMulti={isMultiple}
@@ -37,7 +36,6 @@ const InputSelect = ({
       styles={{
         control: (base) => ({
           ...base,
-          // padding: "6px 12px",
           borderColor: "#7D9D9C",
           borderWidth: "2px",
           boxShadow: "none",

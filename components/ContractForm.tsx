@@ -1,7 +1,5 @@
 import { useQuery } from "@apollo/client";
 import { useState } from "react";
-import Select from "react-select";
-import makeAnimated from "react-select/animated";
 import { GET_STORES } from "../queries/stores.graphql";
 import { useWallet } from "../services/providers/MintbaseWalletContext";
 import InputSelect from "./InputSelect";
@@ -9,8 +7,6 @@ import CreateStoreModal from "./Modals/CreateStoreModal";
 import ManageMintersModal from "./Modals/ManageMintersModal";
 import Modal from "./Modals/Modal";
 import TransferOwnershipModal from "./Modals/TransfersOwnershipModal";
-
-const animatedComponents = makeAnimated();
 
 const ContractForm = () => {
   const [stores, setStores] = useState<string[]>([]);
