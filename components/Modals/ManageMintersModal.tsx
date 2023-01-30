@@ -1,13 +1,9 @@
 import { debounce } from "lodash";
 import { nearWalletExists } from "near-wallet-validator";
 import { useState } from "react";
-import Select from "react-select";
-import makeAnimated from "react-select/animated";
 import { useMintersController } from "../../controllers/useMintersController.controller";
 import { getCurrentRpc } from "../../utils/getCurrentRpc";
 import InputSelect from "../InputSelect";
-
-const animatedComponents = makeAnimated();
 
 const ManageMintersModal = ({
   storeId,
@@ -37,11 +33,7 @@ const ManageMintersModal = ({
     setIsValidWallet(valid);
     return valid;
   };
-
-  const updateMinters = (event) => {
-    setSelectedMinters(event.map((minter) => minter.value));
-  };
-
+  
   const disableRemoveBtn = selectedMinters.length < 1;
   const disableAddBtn = !minterWallet;
 
