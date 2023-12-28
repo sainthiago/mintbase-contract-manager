@@ -1,6 +1,4 @@
 import Link from "next/link";
-import ContractForm from "../components/ContractForm";
-import Hero from "../components/Hero";
 import Layout from "../components/Layout";
 import { useWallet } from "../services/providers/MintbaseWalletContext";
 
