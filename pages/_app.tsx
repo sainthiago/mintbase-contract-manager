@@ -5,6 +5,8 @@ import { useApollo } from "../services/apolloClient";
 import "tailwindcss/tailwind.css";
 
 import { MintbaseWalletContextProvider } from "@mintbase-js/react";
+import "@near-wallet-selector/modal-ui/styles.css";
+
 import { Network } from "mintbase";
 import {
   GRAPH_MAINNET_HTTPS_URI,
