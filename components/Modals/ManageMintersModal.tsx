@@ -1,6 +1,6 @@
 import { debounce } from "lodash";
 import { nearWalletExists } from "near-wallet-validator";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMintersController } from "../../controllers/useMintersController.controller";
 import { getCurrentRpc } from "../../utils/getCurrentRpc";
 import InputSelect from "../InputSelect";
@@ -33,9 +33,13 @@ const ManageMintersModal = ({
     setIsValidWallet(valid);
     return valid;
   };
-  
-  const disableRemoveBtn = selectedMinters.length < 1;
+
+  const disableRemoveBtn = selectedMinters?.length < 1;
   const disableAddBtn = !minterWallet;
+
+  useEffect(() => {
+    console.log({ selectedMinters });
+  }, [selectedMinters]);
 
   return (
     <div className="flex flex-col gap-12 w-full">
@@ -54,6 +58,7 @@ const ManageMintersModal = ({
                   })}
                 setValue={setSelectedMinters}
                 isMultiple
+                isMinters
               />
             </div>
             <div>
