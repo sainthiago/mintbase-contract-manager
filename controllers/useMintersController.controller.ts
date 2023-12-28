@@ -32,8 +32,8 @@ export const useMintersController = (storeId: string) => {
   const handleAddMinter = async (minter: string) => {
     const wallet = await selector.wallet();
 
-    const grantMinterArgs = addMinter({
-      minterId: minter,
+    const grantMinterArgs = batchChangeMinters({
+      addMinters: [minter],
       contractAddress: storeId,
     });
 
@@ -45,21 +45,13 @@ export const useMintersController = (storeId: string) => {
   const handleRevokeMinters = async (minters: string[]) => {
     const wallet = await selector.wallet();
 
-    if (minters.length === 1) {
-      const revokeMinterArgs = removeMinter({
-        minterId: minters[0],
-        contractAddress: storeId,
-      });
+    const revokeMintersArgs = batchChangeMinters({
+      contractAddress: storeId,
+      removeMinters: minters,
+    });
 
-      await execute({ wallet }, revokeMinterArgs);
-    } else {
-      const revokeMintersArgs = batchChangeMinters({
-        contractAddress: storeId,
-        removeMinters: minters,
-      });
+    await execute({ wallet }, revokeMintersArgs);
 
-      await execute({ wallet }, revokeMintersArgs);
-    }
     return null;
   };
 
