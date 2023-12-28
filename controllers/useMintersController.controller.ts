@@ -1,6 +1,11 @@
 import { useQuery } from "@apollo/client";
 import { useMbWallet } from "@mintbase-js/react";
-import { addMinter, execute } from "@mintbase-js/sdk";
+import {
+  addMinter,
+  batchChangeMinters,
+  execute,
+  removeMinter,
+} from "@mintbase-js/sdk";
 import { useState } from "react";
 import { TransactionSuccessEnum } from "../constants/enums";
 import { IMinters } from "../interfaces";
@@ -39,28 +44,22 @@ export const useMintersController = (storeId: string) => {
   };
 
   const handleRevokeMinters = async (minters: string[]) => {
+    const wallet = await selector.wallet();
+
     if (minters.length === 1) {
-      wallet.revokeMinter(minters[0], storeId as string, {
-        callbackUrl: `${window.location.origin}/wallet-callback`,
-        meta: JSON.stringify({
-          type: TransactionSuccessEnum.REVOKE_MINTER,
-          args: {
-            minterId: minters[0],
-            contractName: storeId,
-          },
-        }),
+      const revokeMinterArgs = removeMinter({
+        minterId: minters[0],
+        contractAddress: storeId,
       });
+
+      await execute({ wallet }, revokeMinterArgs);
     } else {
-      wallet.batchChangeMinters([], minters, storeId as string, {
-        callbackUrl: `${window.location.origin}/wallet-callback`,
-        meta: JSON.stringify({
-          type: TransactionSuccessEnum.REVOKE_MINTER,
-          args: {
-            minterId: minters,
-            contractName: storeId,
-          },
-        }),
+      const revokeMintersArgs = batchChangeMinters({
+        contractAddress: storeId,
+        removeMinters: minters,
       });
+
+      await execute({ wallet }, revokeMintersArgs);
     }
     return null;
   };
