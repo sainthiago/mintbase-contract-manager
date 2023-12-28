@@ -1,18 +1,19 @@
-import type { AppProps } from "next/app";
-import { WalletProvider } from "../services/providers/MintbaseWalletContext";
 import { ApolloProvider } from "@apollo/client";
+import type { AppProps } from "next/app";
 import { useApollo } from "../services/apolloClient";
 
 import "tailwindcss/tailwind.css";
 
+import { MintbaseWalletContextProvider } from "@mintbase-js/react";
+import "@near-wallet-selector/modal-ui/styles.css";
+
+import { Network } from "mintbase";
 import {
   GRAPH_MAINNET_HTTPS_URI,
   GRAPH_TESTNET_HTTPS_URI,
 } from "../constants/mintbase";
-import { Network } from "mintbase";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  
   const apolloClient = (network) =>
     useApollo({
       ...pageProps,
@@ -37,14 +38,15 @@ function MyApp({ Component, pageProps }: AppProps) {
   localStorage.setItem("network", networkDetails);
 
   return (
-    <WalletProvider
-      apiKey={process.env.NEXT_PUBLIC_MINTBASEJS_API_KEY || ""}
+    <MintbaseWalletContextProvider
+      contractAddress="hellovirtualworld.mintspace2.testnet"
       network={networkDetails as Network}
+      callbackUrl={`${window.location.origin}/wallet-callback`}
     >
       <ApolloProvider client={apolloClient(networkDetails)}>
         <Component {...pageProps} />
       </ApolloProvider>
-    </WalletProvider>
+    </MintbaseWalletContextProvider>
   );
 }
 export default MyApp;

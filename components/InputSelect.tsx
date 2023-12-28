@@ -9,11 +9,13 @@ const InputSelect = ({
   placeholder,
   isMultiple,
   setValue,
+  isMinters,
 }: {
   options: { value: string; label: string }[];
   placeholder: string;
   isMultiple?: boolean;
   setValue: Dispatch<SetStateAction<string | string[]>>;
+  isMinters?: boolean;
 }) => {
   return (
     <Select
@@ -21,7 +23,9 @@ const InputSelect = ({
       components={animatedComponents}
       placeholder={placeholder}
       onChange={(event: any) => {
-        setValue(event.value);
+        setValue(
+          isMinters ? event?.map((minter) => minter.value) : event.value
+        );
       }}
       isMulti={isMultiple}
       options={options}
