@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
+import { useMbWallet } from "@mintbase-js/react";
 import { useState } from "react";
 import { GET_STORES } from "../queries/stores.graphql";
-import { useWallet } from "../services/providers/MintbaseWalletContext";
 import InputSelect from "./InputSelect";
 import CreateStoreModal from "./Modals/CreateStoreModal";
 import ManageMintersModal from "./Modals/ManageMintersModal";
@@ -11,20 +11,18 @@ import TransferOwnershipModal from "./Modals/TransfersOwnershipModal";
 const ContractForm = () => {
   const [stores, setStores] = useState<string[]>([]);
   const [selectedStoreId, setSelectedStoreId] = useState("");
-  const { wallet } = useWallet();
+  const { activeAccountId } = useMbWallet();
 
   const [manageMintersModal, setManageMintersModal] = useState(false);
   const [transferOwnershipModal, setTransferOwnershipModal] = useState(false);
   const [newStoreModal, setNewStoreModal] = useState(false);
 
-  const accountId = wallet?.activeAccount?.accountId;
-
   const { refetch: fetchStores } = useQuery(GET_STORES, {
     variables: {
-      accountId,
+      accountId: activeAccountId,
     },
     onCompleted: (data) => {
-      if (!accountId) {
+      if (!activeAccountId) {
         return;
       }
 
@@ -96,7 +94,10 @@ const ContractForm = () => {
         </div>
       </div>
       <Modal isOpen={manageMintersModal} setIsOpen={setManageMintersModal}>
-        <ManageMintersModal storeId={selectedStoreId} accountId={accountId} />
+        <ManageMintersModal
+          storeId={selectedStoreId}
+          accountId={activeAccountId}
+        />
       </Modal>
       <Modal
         isOpen={transferOwnershipModal}
