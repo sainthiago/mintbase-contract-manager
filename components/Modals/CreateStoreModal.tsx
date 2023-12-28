@@ -26,7 +26,6 @@ const CreateStoreModal = () => {
                 className="rounded relative border-2 border-light-green py-1.5 px-3 bg-transparent focus:outline-none w-full"
                 onChange={debounce(async (e) => {
                   const value = e.target.value ?? null;
-                  console.log({ value });
 
                   if (!value) {
                     setIsValidStoreName(true);

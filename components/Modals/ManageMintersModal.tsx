@@ -37,10 +37,6 @@ const ManageMintersModal = ({
   const disableRemoveBtn = selectedMinters?.length < 1;
   const disableAddBtn = !minterWallet;
 
-  useEffect(() => {
-    console.log({ selectedMinters });
-  }, [selectedMinters]);
-
   return (
     <div className="flex flex-col gap-12 w-full">
       <div>
