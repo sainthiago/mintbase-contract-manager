@@ -1,12 +1,13 @@
 import { useQuery } from "@apollo/client";
+import { useMbWallet } from "@mintbase-js/react";
+import { addMinter, execute } from "@mintbase-js/sdk";
 import { useState } from "react";
 import { TransactionSuccessEnum } from "../constants/enums";
 import { IMinters } from "../interfaces";
 import { GET_MINTERS_BY_STORE_ID } from "../queries/minters.graphql";
-import { useWallet } from "../services/providers/MintbaseWalletContext";
 
 export const useMintersController = (storeId: string) => {
-  const { wallet } = useWallet();
+  const { selector } = useMbWallet();
 
   const [minterAccounts, setMinterAccounts] = useState<string[]>([]);
 
@@ -25,16 +26,15 @@ export const useMintersController = (storeId: string) => {
   });
 
   const handleAddMinter = async (minter: string) => {
-    await wallet.grantMinter(minter, storeId as string, {
-      callbackUrl: `${window.location.origin}/wallet-callback`,
-      meta: JSON.stringify({
-        type: TransactionSuccessEnum.ADD_MINTER,
-        args: {
-          minterId: minter,
-          contractName: storeId,
-        },
-      }),
+    const wallet = await selector.wallet();
+
+    const grantMinterArgs = addMinter({
+      minterId: minter,
+      contractAddress: storeId,
     });
+
+    await execute({ wallet }, grantMinterArgs);
+
     return null;
   };
 
