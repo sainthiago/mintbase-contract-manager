@@ -41,6 +41,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <MintbaseWalletContextProvider
       contractAddress="hellovirtualworld.mintspace2.testnet"
       network={networkDetails as Network}
+      callbackUrl={`${window.location.origin}/wallet-callback`}
     >
       <ApolloProvider client={apolloClient(networkDetails)}>
         <Component {...pageProps} />
