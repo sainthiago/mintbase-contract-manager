@@ -8,6 +8,7 @@ import {
   mbjs,
   transferContractOwnership,
 } from "@mintbase-js/sdk";
+import { getCurrentNetwork } from "../utils/getCurrentNetwork";
 
 export const useStoreController = () => {
   const { selector, activeAccountId } = useMbWallet();
@@ -42,12 +43,11 @@ export const useStoreController = () => {
 
   const deployStore = async (name: string, symbol: string) => {
     const wallet = await selector.wallet();
-    const currentNetwork = localStorage.getItem("network") || "mainnet";
 
     const deployArgs = deployContract({
       name: name,
       ownerId: activeAccountId,
-      factoryContractId: MINTBASE_CONTRACTS[currentNetwork],
+      factoryContractId: MINTBASE_CONTRACTS[getCurrentNetwork()],
       metadata: {
         symbol: symbol,
       },
