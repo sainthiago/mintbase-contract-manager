@@ -1,7 +1,7 @@
-import { useWallet } from "../services/providers/MintbaseWalletContext";
+import { useMbWallet } from "@mintbase-js/react";
 
 const Hero = () => {
-  const { wallet } = useWallet();
+  const { connect } = useMbWallet();
 
   return (
     <div className="flex flex-col justify-center items-center gap-10">
@@ -24,7 +24,7 @@ const Hero = () => {
 
       <a
         className="block w-fit py-4 px-6 rounded-full bg-light-green text-white cursor-pointer transform transition duration-500 hover:scale-105 hover:-translate-y-0.5 hover:bg-light-black"
-        onClick={() => wallet?.connect({ requestSignIn: true })}
+        onClick={connect}
       >
         Connect your wallet
       </a>
