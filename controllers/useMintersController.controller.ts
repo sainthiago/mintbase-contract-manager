@@ -7,7 +7,6 @@ import {
   removeMinter,
 } from "@mintbase-js/sdk";
 import { useState } from "react";
-import { TransactionSuccessEnum } from "../constants/enums";
 import { IMinters } from "../interfaces";
 import { GET_MINTERS_BY_STORE_ID } from "../queries/minters.graphql";
 

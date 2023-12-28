@@ -5,6 +5,7 @@ import {
   MINTBASE_CONTRACTS,
   deployContract,
   execute,
+  mbjs,
   transferContractOwnership,
 } from "@mintbase-js/sdk";
 
@@ -41,10 +42,12 @@ export const useStoreController = () => {
 
   const deployStore = async (name: string, symbol: string) => {
     const wallet = await selector.wallet();
+    const currentNetwork = localStorage.getItem("network") || "mainnet";
 
     const deployArgs = deployContract({
       name: name,
       ownerId: activeAccountId,
+      factoryContractId: MINTBASE_CONTRACTS[currentNetwork],
       metadata: {
         symbol: symbol,
       },
